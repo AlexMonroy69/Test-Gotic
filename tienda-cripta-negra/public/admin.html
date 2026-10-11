@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Panel · Cripta Negra</title>
+  <meta name="robots" content="noindex" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600&family=UnifrakturMaguntia&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/styles.css" />
+  <link rel="stylesheet" href="/css/admin.css" />
+</head>
+<body>
+  <!-- ===== LOGIN ===== -->
+  <div id="loginView" class="login-shell">
+    <form class="login-card" id="loginForm">
+      <div class="mark">C</div>
+      <h2>Panel · Cripta Negra</h2>
+      <label class="field">
+        <span>Usuario</span>
+        <input class="input" type="text" id="user" autocomplete="username" required />
+      </label>
+      <label class="field">
+        <span>Contraseña</span>
+        <input class="input" type="password" id="pass" autocomplete="current-password" required />
+      </label>
+      <div class="err" id="loginErr"></div>
+      <button class="btn btn-solid" type="submit" style="width:100%; text-align:center;">Entrar</button>
+    </form>
+  </div>
+
+  <!-- ===== PANEL ===== -->
+  <div id="panelView" style="display:none;">
+    <header class="admin-top">
+      <div class="wrap">
+        <a class="brand" href="/" style="display:flex; align-items:baseline; gap:.5rem;">
+          <span class="mark">C</span><span class="word">Cripta Negra</span>
+        </a>
+        <span class="tag">Administración</span>
+        <button class="logout-btn" id="logoutBtn">Salir</button>
+      </div>
+    </header>
+
+    <main class="admin-main">
+      <div class="wrap">
+        <div class="admin-head">
+          <h1>Productos</h1>
+          <span class="count" id="count"></span>
+        </div>
+
+        <div class="admin-grid">
+          <!-- Formulario -->
+          <div class="form-card">
+            <h3 id="formTitle">Nuevo producto</h3>
+            <form id="productForm">
+              <input type="hidden" id="pid" />
+              <img class="img-preview" id="imgPreview" alt="Vista previa"
+                   src="https://picsum.photos/seed/cripta-nuevo/400/400?grayscale" />
+              <label class="field">
+                <span>Imagen (URL)</span>
+                <input class="input" type="url" id="f_image" placeholder="https://… o pega el enlace de tu foto" />
+              </label>
+              <label class="field">
+                <span>Nombre</span>
+                <input class="input" type="text" id="f_name" required />
+              </label>
+              <div class="row-2">
+                <label class="field">
+                  <span>Categoría</span>
+                  <input class="input" type="text" id="f_category" list="cats" placeholder="Joyería, Calzado…" />
+                  <datalist id="cats"></datalist>
+                </label>
+                <label class="field">
+                  <span>Precio (COP)</span>
+                  <input class="input" type="number" id="f_price" min="0" step="1000" required />
+                </label>
+              </div>
+              <label class="field">
+                <span>Stock</span>
+                <input class="input" type="number" id="f_stock" min="0" step="1" value="1" />
+              </label>
+              <label class="field">
+                <span>Descripción</span>
+                <textarea class="textarea" id="f_description"></textarea>
+              </label>
+              <label class="checkbox-row">
+                <input type="checkbox" id="f_active" checked /> Visible en la tienda
+              </label>
+              <div class="err" id="formErr"></div>
+              <div class="form-actions">
+                <button class="btn btn-solid" type="submit" id="saveBtn">Guardar</button>
+                <button class="btn btn-ghost" type="button" id="resetBtn">Limpiar</button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Lista -->
+          <div>
+            <div class="product-list" id="list">
+              <div class="loading">Cargando productos…</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <div class="toast" id="toast"></div>
+  <script src="/js/admin.js"></script>
+</body>
+</html>

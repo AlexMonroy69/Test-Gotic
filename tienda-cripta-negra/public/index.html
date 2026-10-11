@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Cripta Negra · Indumentaria &amp; Accesorios Góticos</title>
+  <meta name="description" content="Cripta Negra — indumentaria y accesorios góticos. Joyería, calzado y prendas en blanco y negro." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600&family=UnifrakturMaguntia&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <div class="wrap nav">
+      <a class="brand" href="/">
+        <span class="mark">C</span>
+        <span class="word">Cripta Negra</span>
+      </a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="/" class="active">Inicio</a></li>
+        <li><a href="/catalogo.html">Catálogo</a></li>
+        <li><a href="#historia">Historia</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+      </ul>
+      <div style="display:flex; align-items:center; gap:12px;">
+        <button class="cart-btn" id="cartBtn">Carrito <span class="cart-count" id="cartCount" data-n="0"></span></button>
+        <button class="nav-toggle" id="navToggle" aria-label="Menú"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="mark-big">Cripta Negra</div>
+      <h1>Indumentaria Gótica</h1>
+      <p>Donde la oscuridad se viste de elegancia. Joyería, prendas y accesorios para las almas de medianoche.</p>
+      <div class="ornament">&#10070; &#10070; &#10070;</div>
+      <a href="/catalogo.html" class="btn btn-solid">Explorar el catálogo</a>
+    </div>
+  </section>
+
+  <!-- Destacados -->
+  <section class="section" id="destacados">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Selección</span>
+        <h2>Piezas destacadas</h2>
+        <div class="divider"></div>
+      </div>
+      <div class="grid" id="featuredGrid">
+        <div class="loading">Invocando el catálogo…</div>
+      </div>
+      <div style="text-align:center; margin-top:40px;">
+        <a href="/catalogo.html" class="btn btn-ghost">Ver todo el catálogo</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Historia -->
+  <section class="section" id="historia" style="border-top:1px solid var(--line-soft)">
+    <div class="wrap">
+      <div class="feature-row">
+        <div class="feature-col">
+          <div class="num">I</div>
+          <h3>Diseño oscuro</h3>
+          <p>Prendas y accesorios de inspiración gótica, victoriana y alternativa.</p>
+        </div>
+        <div class="feature-col">
+          <div class="num">II</div>
+          <h3>Pieza a pieza</h3>
+          <p>Seleccionamos cada artículo por su carácter, su materialidad y su detalle.</p>
+        </div>
+        <div class="feature-col">
+          <div class="num">III</div>
+          <h3>Pedido directo</h3>
+          <p>Arma tu carrito y envía tu pedido por WhatsApp. Atención personal y cercana.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer" id="contacto">
+    <div class="wrap footer-grid">
+      <div class="footer-brand">
+        <div class="mark">Cripta Negra</div>
+        <p style="margin-top:12px; max-width:320px;">Indumentaria y accesorios góticos. Oriente Antioqueño, Colombia.</p>
+      </div>
+      <div>
+        <h4>Tienda</h4>
+        <ul>
+          <li><a href="/catalogo.html">Catálogo completo</a></li>
+          <li><a href="/catalogo.html#Joyeria">Joyería</a></li>
+          <li><a href="/catalogo.html#Indumentaria">Indumentaria</a></li>
+          <li><a href="/catalogo.html#Accesorios">Accesorios</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contacto</h4>
+        <ul>
+          <li><a href="#" id="waLink" target="_blank" rel="noopener">WhatsApp</a></li>
+          <li><a href="mailto:hola@criptanegra.co">hola@criptanegra.co</a></li>
+          <li>Pedidos de lunes a sábado</li>
+        </ul>
+      </div>
+    </div>
+    <div class="wrap footer-bottom">
+      &copy; <span id="year"></span> Cripta Negra · Todos los derechos reservados
+    </div>
+  </footer>
+
+  <!-- Carrito drawer -->
+  <div class="overlay" id="overlay"></div>
+  <aside class="drawer" id="drawer" aria-label="Carrito de compras">
+    <div class="drawer-head">
+      <h3>Tu carrito</h3>
+      <button class="drawer-close" id="drawerClose" aria-label="Cerrar">&times;</button>
+    </div>
+    <div class="drawer-body" id="cartBody"></div>
+    <div class="drawer-foot">
+      <div class="cart-total">
+        <span class="t-label">Total</span>
+        <span class="t-val" id="cartTotal">$0</span>
+      </div>
+      <button class="btn btn-solid" id="checkoutBtn">Pedir por WhatsApp</button>
+    </div>
+  </aside>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="/js/store.js"></script>
+  <script>
+    // La home muestra solo 4 destacados
+    document.addEventListener('DOMContentLoaded', () => CriptaStore.renderFeatured('featuredGrid', 4));
+  </script>
+</body>
+</html>
