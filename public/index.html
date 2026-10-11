@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Cripta Negra · Antes de entrar</title>
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/consent.css" />
+</head>
+<body>
+  <main class="gate">
+    <section class="card" role="dialog" aria-labelledby="brand">
+      <h1 id="brand" class="brand wordmark">Cripta Negra</h1>
+      <p class="subtitle">Accesorios &amp; indumentaria gótica</p>
+
+      <div class="ornament">&#10070; &#10070; &#10070;</div>
+      <div class="rule"></div>
+
+      <h2>Antes de entrar: en qué consiste</h2>
+      <p>
+        Esta página es un <strong>experimento educativo de ciberseguridad</strong> del instituto.
+        Su objetivo es mostrarte, de forma transparente, <em>cuánta información puede obtener un sitio web
+        de ti con solo visitarlo</em>. No es una tienda real.
+      </p>
+
+      <h2>Qué datos se van a recoger</h2>
+      <ul class="collect-list">
+        <li>Tu dirección <strong>IP</strong> y tu ubicación aproximada según esa IP (ciudad/país).</li>
+        <li>Datos de tu dispositivo: navegador, sistema operativo, resolución de pantalla, idioma, zona horaria, memoria, núcleos, tarjeta gráfica y una "huella" del navegador (canvas fingerprint).</li>
+        <li>Tu <strong>ubicación GPS</strong> precisa — solo si aceptas el permiso que te pedirá el navegador.</li>
+        <li>Opcional: una <strong>foto</strong> (cámara o archivo), solo si tú decides activarla.</li>
+      </ul>
+
+      <div class="why">
+        <strong>¿Por qué se recoge la IP y lo demás?</strong>
+        <p class="muted" style="margin:6px 0 0">
+          Para demostrar en clase cómo funciona el rastreo y el <em>fingerprinting</em>, y así aprender a
+          defendernos (por qué el navegador pide permiso para el GPS, cómo una VPN cambia tu IP y cómo las
+          extensiones anti-fingerprint rompen el rastreo). Los datos van a un panel privado del responsable
+          del experimento y se usan únicamente con fines académicos.
+        </p>
+      </div>
+
+      <div class="rule"></div>
+
+      <p class="muted">
+        Puedes <strong>no aceptar</strong> y salir. Si continúas, estás dando tu consentimiento informado para
+        la recolección descrita arriba.
+      </p>
+
+      <label class="perm-row">
+        <input type="checkbox" id="optPhoto" />
+        También quiero permitir el acceso a una foto (cámara o archivo) — opcional
+      </label>
+
+      <div class="actions">
+        <button class="btn-blood btn" id="acceptBtn">Acepto y entrar a la cripta</button>
+        <button class="btn-ghost btn" id="declineBtn">No acepto</button>
+      </div>
+
+      <div class="status" id="status" aria-live="polite"></div>
+
+      <footer class="fine">Proyecto académico · Ley 1581 de 2012 (Habeas Data) · Datos tratados solo para la demostración</footer>
+    </section>
+  </main>
+
+  <script src="/js/consent.js"></script>
+</body>
+</html>

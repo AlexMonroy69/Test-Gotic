@@ -1,0 +1,24 @@
+# Blueprint opcional para Render. Si subes el repo y usas "New > Blueprint",
+# Render crea el servicio web y la base de datos automaticamente.
+services:
+  - type: web
+    name: goticos-experimento
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: goticos-db
+          property: connectionString
+      - key: ADMIN_USER
+        value: pingonsito
+      - key: ADMIN_PASS
+        value: pingonsita
+      - key: SESSION_SECRET
+        generateValue: true
+
+databases:
+  - name: goticos-db
+    plan: free
