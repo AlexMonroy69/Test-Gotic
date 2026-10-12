@@ -55,8 +55,8 @@ Abre http://localhost:3000. Sin `DATABASE_URL` guarda en un archivo `data.json` 
 ### Opción B — manual
 1. En Render: **New > PostgreSQL** (plan Free). Copia la **Internal Database URL**.
 2. **New > Web Service**, conecta el repo.
-   - Build Command: `npm install`
-   - Start Command: `npm start`
+   - Build Command: `npm --prefix tienda-cripta-negra install`
+   - Start Command: `npm --prefix tienda-cripta-negra start`
 3. En **Environment**, agrega:
    - `DATABASE_URL` = la URL de Postgres del paso 1
    - `ADMIN_USER` = `pingonsito`
