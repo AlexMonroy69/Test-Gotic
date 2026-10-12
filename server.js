@@ -2,22 +2,25 @@ import express from 'express';
 import crypto from 'crypto';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { initDb, saveVisit, listVisits, clearVisits } from './db.js';
+import {
+  initDb, listPublicProducts, listAllProducts,
+  createProduct, updateProduct, deleteProduct
+} from './db.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Credenciales del panel (se pueden cambiar con variables de entorno).
-const ADMIN_USER = process.env.ADMIN_USER || 'pingonsito';
-const ADMIN_PASS = process.env.ADMIN_PASS || 'pingonsita';
+// Credenciales del panel (cambialas con variables de entorno en produccion).
+const ADMIN_USER = process.env.ADMIN_USER || 'admin';
+const ADMIN_PASS = process.env.ADMIN_PASS || 'cambia-esta-clave';
 const SECRET = process.env.SESSION_SECRET || 'cambia-esta-clave-secreta';
+const WHATSAPP = process.env.WHATSAPP || '573001234567';
 
-app.set('trust proxy', true); // para obtener la IP real detras del proxy de Render/Vercel
-app.use(express.json({ limit: '6mb' })); // 6mb por si se envia una foto
+app.use(express.json({ limit: '2mb' }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-// ---------- Utilidades de autenticacion (token firmado, sin sesiones) ----------
+// ---------- Autenticacion del panel (token firmado) ----------
 function makeToken() {
   const payload = `${ADMIN_USER}.${Date.now()}`;
   const sig = crypto.createHmac('sha256', SECRET).update(payload).digest('hex');
@@ -39,63 +42,23 @@ function requireAuth(req, res, next) {
   next();
 }
 
-// ---------- Geolocalizacion aproximada por IP (gratis, sin API key) ----------
-async function geoFromIp(ip) {
+// ---------- Config publica (numero de WhatsApp para el carrito) ----------
+app.get('/api/config', (_req, res) => {
+  res.json({ whatsapp: WHATSAPP });
+});
+
+// ---------- Catalogo publico ----------
+app.get('/api/products', async (_req, res) => {
   try {
-    if (!ip || ip === '::1' || ip.startsWith('127.') || ip.startsWith('192.168.') || ip.startsWith('10.')) {
-      return { city: null, region: null, country: null };
-    }
-    const r = await fetch(`http://ip-api.com/json/${ip}?fields=status,country,regionName,city`);
-    const j = await r.json();
-    if (j.status === 'success') return { city: j.city, region: j.regionName, country: j.country };
-  } catch { /* si falla, seguimos sin geo por IP */ }
-  return { city: null, region: null, country: null };
-}
-
-// ---------- API: recoleccion (publica, el visitante ya acepto en la pantalla de consentimiento) ----------
-app.post('/api/collect', async (req, res) => {
-  try {
-    const b = req.body || {};
-    let ip = (req.headers['x-forwarded-for'] || req.ip || '').toString().split(',')[0].trim();
-    if (ip.startsWith('::ffff:')) ip = ip.slice(7);
-
-    const geo = await geoFromIp(ip);
-
-    const row = {
-      ip,
-      ip_city: geo.city,
-      ip_region: geo.region,
-      ip_country: geo.country,
-      gps_lat: b.gps_lat ?? null,
-      gps_lon: b.gps_lon ?? null,
-      gps_accuracy: b.gps_accuracy ?? null,
-      device_label: b.device_label ?? null,
-      user_agent: b.user_agent ?? req.headers['user-agent'] ?? null,
-      platform: b.platform ?? null,
-      languages: b.languages ?? null,
-      timezone: b.timezone ?? null,
-      screen: b.screen ?? null,
-      viewport: b.viewport ?? null,
-      cpu_cores: b.cpu_cores ?? null,
-      device_memory: b.device_memory ?? null,
-      gpu: b.gpu ?? null,
-      touch: b.touch ?? null,
-      battery: b.battery ?? null,
-      canvas_fp: b.canvas_fp ?? null,
-      permissions: b.permissions ? JSON.stringify(b.permissions) : null,
-      photo: b.photo ?? null,
-      referrer: b.referrer ?? null
-    };
-
-    const saved = await saveVisit(row);
-    res.json({ ok: true, id: saved.id });
+    const products = await listPublicProducts();
+    res.json({ ok: true, products });
   } catch (e) {
     console.error(e);
-    res.status(500).json({ error: 'No se pudo guardar la visita' });
+    res.status(500).json({ error: 'No se pudo cargar el catalogo' });
   }
 });
 
-// ---------- API: login del panel ----------
+// ---------- Login del panel ----------
 app.post('/api/login', (req, res) => {
   const { user, pass } = req.body || {};
   if (user === ADMIN_USER && pass === ADMIN_PASS) {
@@ -104,18 +67,36 @@ app.post('/api/login', (req, res) => {
   res.status(401).json({ error: 'Usuario o contrasena incorrectos' });
 });
 
-// ---------- API: listar visitas (protegida) ----------
-app.get('/api/visits', requireAuth, async (_req, res) => {
-  const rows = await listVisits();
-  res.json({ ok: true, visits: rows });
+// ---------- Gestion de productos (protegida) ----------
+app.get('/api/admin/products', requireAuth, async (_req, res) => {
+  const products = await listAllProducts();
+  res.json({ ok: true, products });
 });
 
-// ---------- API: borrar todo (protegida) ----------
-app.post('/api/clear', requireAuth, async (_req, res) => {
-  await clearVisits();
-  res.json({ ok: true });
+app.post('/api/admin/products', requireAuth, async (req, res) => {
+  try {
+    const p = await createProduct(req.body || {});
+    res.json({ ok: true, product: p });
+  } catch (e) {
+    res.status(400).json({ error: e.message });
+  }
+});
+
+app.put('/api/admin/products/:id', requireAuth, async (req, res) => {
+  try {
+    const p = await updateProduct(req.params.id, req.body || {});
+    if (!p) return res.status(404).json({ error: 'Producto no encontrado' });
+    res.json({ ok: true, product: p });
+  } catch (e) {
+    res.status(400).json({ error: e.message });
+  }
+});
+
+app.delete('/api/admin/products/:id', requireAuth, async (req, res) => {
+  const ok = await deleteProduct(req.params.id);
+  res.json({ ok });
 });
 
 initDb().then(() => {
-  app.listen(PORT, () => console.log(`Servidor en http://localhost:${PORT}`));
+  app.listen(PORT, () => console.log(`Cripta Negra en http://localhost:${PORT}`));
 });
