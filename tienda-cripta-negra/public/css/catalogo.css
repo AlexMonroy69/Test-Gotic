@@ -1,0 +1,86 @@
+.topbar {
+  position: sticky; top: 0; z-index: 20;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 28px; padding-top: calc(16px + env(safe-area-inset-top, 0px));
+  background: rgba(14,10,12,.86);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--line);
+}
+.topbar .logo { font-family: var(--display); font-size: 1.8rem; }
+.topbar nav a { margin-left: 22px; font-family: var(--title); font-size: .85rem; letter-spacing: .08em; color: var(--ash); }
+.topbar nav a:hover { color: var(--gold-soft); }
+.cart-pill { font-family: var(--title); font-size:.85rem; color: var(--bone); border:1px solid var(--line); padding:8px 14px; border-radius:2px; }
+
+.hero {
+  position: relative;
+  min-height: 62vh;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  text-align: center; padding: 70px 20px;
+  border-bottom: 1px solid var(--line);
+  overflow: hidden;
+}
+.hero::after {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(600px 300px at 50% 30%, rgba(163,22,33,.22), transparent 70%);
+  pointer-events: none;
+}
+.hero h1 { font-family: var(--display); font-size: clamp(3.4rem, 11vw, 7rem); color: var(--gold-soft); margin: 0; text-shadow: 0 0 40px rgba(217,180,91,.35), 0 3px 0 #000; }
+.hero p { max-width: 560px; color: var(--bone); font-size: 1.3rem; font-style: italic; margin: 14px 0 26px; }
+
+.section-title { text-align:center; margin: 56px 0 6px; }
+.section-title h2 { font-size: 2rem; color: var(--bone); }
+.section-title .ornament { margin-top: 8px; }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 26px;
+  max-width: 1140px;
+  margin: 34px auto 70px;
+  padding: 0 24px;
+}
+
+.product {
+  background: linear-gradient(180deg, var(--ink-2), var(--ink));
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  overflow: hidden;
+  display: flex; flex-direction: column;
+  transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+}
+.product:hover { transform: translateY(-4px); border-color: var(--gold); box-shadow: 0 20px 50px rgba(0,0,0,.55), inset 0 0 40px rgba(110,20,35,.15); }
+
+.product .art { position: relative; height: 210px; overflow: hidden; display:flex; align-items:center; justify-content:center; background: radial-gradient(240px 160px at 50% 40%, rgba(110,20,35,.35), transparent 70%), var(--ink-3); border-bottom: 1px solid var(--line); }
+.product .art-img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .4s ease; }
+.product:hover .art-img { transform: scale(1.05); }
+.product .art::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(14,10,12,.15) 0%, transparent 35%, rgba(14,10,12,.6) 100%); pointer-events: none; }
+.product .art.noimg svg { width: 96px; height: 96px; color: var(--gold-soft); filter: drop-shadow(0 0 12px rgba(217,180,91,.3)); }
+
+.product .body { padding: 18px 18px 20px; display:flex; flex-direction:column; gap:8px; flex:1; }
+.product .name { font-family: var(--title); font-size: 1.15rem; color: var(--bone); }
+.product .desc { color: var(--ash); font-size: 1rem; flex:1; }
+.product .row { display:flex; align-items:center; justify-content:space-between; margin-top:6px; }
+.product .price { font-family: var(--title); color: var(--gold-soft); font-size: 1.15rem; }
+.product .add { font-family: var(--title); font-size:.8rem; letter-spacing:.06em; padding:9px 16px; }
+
+.banner-exp {
+  max-width: 1140px; margin: 10px auto 0; padding: 14px 24px;
+  text-align:center; color: var(--ash); font-style: italic; font-size: .95rem;
+}
+
+footer.site { border-top:1px solid var(--line); text-align:center; padding: 34px 20px; color: var(--ash); font-style: italic; }
+footer.site .logo { font-family: var(--display); font-size: 1.6rem; color: var(--gold-soft); display:block; margin-bottom:8px; }
+
+.toast {
+  position: fixed; left: 50%; bottom: 26px; transform: translateX(-50%) translateY(20px);
+  background: linear-gradient(180deg, var(--oxblood), #4b0d18); color:#fff;
+  border:1px solid var(--ember); padding: 12px 22px; border-radius: 3px;
+  font-family: var(--title); font-size:.9rem; opacity:0; pointer-events:none;
+  transition: opacity .3s ease, transform .3s ease; z-index: 50;
+}
+.toast.show { opacity:1; transform: translateX(-50%) translateY(0); }
+
+@media (max-width: 560px) {
+  .topbar { padding: 14px 16px; }
+  .topbar nav a { margin-left: 14px; }
+}
