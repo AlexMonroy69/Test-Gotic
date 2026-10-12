@@ -3,78 +3,53 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Catálogo · Cripta Negra</title>
-  <meta name="description" content="Catálogo completo de Cripta Negra — joyería, indumentaria, calzado y accesorios góticos." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600&family=UnifrakturMaguntia&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/css/styles.css" />
+  <title>Cripta Negra · Accesorios góticos</title>
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/catalogo.css" />
 </head>
 <body>
-  <header class="site-header">
-    <div class="wrap nav">
-      <a class="brand" href="/">
-        <span class="mark">C</span>
-        <span class="word">Cripta Negra</span>
-      </a>
-      <ul class="nav-links" id="navLinks">
-        <li><a href="/">Inicio</a></li>
-        <li><a href="/catalogo.html" class="active">Catálogo</a></li>
-        <li><a href="/#historia">Historia</a></li>
-        <li><a href="/#contacto">Contacto</a></li>
-      </ul>
-      <div style="display:flex; align-items:center; gap:12px;">
-        <button class="cart-btn" id="cartBtn">Carrito <span class="cart-count" id="cartCount" data-n="0"></span></button>
-        <button class="nav-toggle" id="navToggle" aria-label="Menú"><span></span><span></span><span></span></button>
-      </div>
-    </div>
+  <header class="topbar">
+    <span class="logo wordmark">Cripta Negra</span>
+    <nav>
+      <a href="#catalogo">Catálogo</a>
+      <a href="#sobre">Sobre nosotros</a>
+      <span class="cart-pill">Carrito · <span id="cartCount">0</span></span>
+    </nav>
   </header>
 
-  <section class="section">
-    <div class="wrap">
-      <div class="section-head">
-        <span class="eyebrow">Colección completa</span>
-        <h2>El Catálogo</h2>
-        <p>Cada pieza, escogida para quienes visten la noche.</p>
-        <div class="divider"></div>
-      </div>
-
-      <div class="filters" id="filters"></div>
-
-      <div class="grid" id="catalogGrid">
-        <div class="loading">Invocando el catálogo…</div>
-      </div>
-    </div>
+  <section class="hero">
+    <h1 class="wordmark">Cripta Negra</h1>
+    <p>Adornos para quienes visten la noche. Plata ennegrecida, encaje, cuero y reliquias.</p>
+    <a href="#catalogo" class="btn btn-blood">Ver el catálogo</a>
   </section>
 
-  <footer class="site-footer">
-    <div class="wrap footer-bottom" style="border:0; margin:0;">
-      &copy; <span id="year"></span> Cripta Negra · <a href="/">Volver al inicio</a>
-    </div>
+  <div class="banner-exp">
+    Catálogo demostrativo: fotografías de objetos históricos reales del Metropolitan Museum of Art (CC0). La foto del broche de araña es de toritoons (CC BY 2.0). Los precios son de muestra y las piezas no están a la venta.
+  </div>
+
+  <div class="section-title" id="catalogo">
+    <h2>Reliquias de la casa</h2>
+    <div class="ornament">&#10070; &#10070; &#10070;</div>
+  </div>
+
+  <main class="grid" id="grid"></main>
+
+  <div class="section-title" id="sobre">
+    <h2>Sobre la cripta</h2>
+    <div class="ornament">&#10070;</div>
+  </div>
+  <p style="max-width:640px;margin:18px auto 60px;text-align:center;color:var(--ash);font-size:1.15rem;padding:0 24px">
+    Cada pieza se forja a mano entre cirios. Trabajamos la plata ennegrecida, el acero y el encaje antiguo
+    para quienes entienden que la elegancia también habita en la sombra.
+  </p>
+
+  <footer class="site">
+    <span class="logo wordmark">Cripta Negra</span>
+    Accesorios &amp; indumentaria gótica · Proyecto académico
   </footer>
 
-  <!-- Carrito drawer -->
-  <div class="overlay" id="overlay"></div>
-  <aside class="drawer" id="drawer" aria-label="Carrito de compras">
-    <div class="drawer-head">
-      <h3>Tu carrito</h3>
-      <button class="drawer-close" id="drawerClose" aria-label="Cerrar">&times;</button>
-    </div>
-    <div class="drawer-body" id="cartBody"></div>
-    <div class="drawer-foot">
-      <div class="cart-total">
-        <span class="t-label">Total</span>
-        <span class="t-val" id="cartTotal">$0</span>
-      </div>
-      <button class="btn btn-solid" id="checkoutBtn">Pedir por WhatsApp</button>
-    </div>
-  </aside>
+  <div class="toast" id="toast">Añadido a tu carrito</div>
 
-  <div class="toast" id="toast"></div>
-
-  <script src="/js/store.js"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', () => CriptaStore.renderCatalog('catalogGrid', 'filters'));
-  </script>
+  <script src="/js/catalogo.js"></script>
 </body>
 </html>

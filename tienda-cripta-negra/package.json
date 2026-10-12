@@ -1,7 +1,7 @@
 {
-  "name": "cripta-negra-tienda",
+  "name": "goticos-experimento",
   "version": "1.0.0",
-  "description": "Cripta Negra - tienda de indumentaria y accesorios goticos. Storefront + panel de administracion de productos.",
+  "description": "Demo educativa de ciberseguridad: fingerprinting de navegador con consentimiento informado, tematizada como tienda de accesorios goticos.",
   "type": "module",
   "main": "server.js",
   "scripts": {

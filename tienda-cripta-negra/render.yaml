@@ -1,8 +1,8 @@
-# Blueprint opcional para Render. Con "New > Blueprint" crea el servicio web
-# y la base de datos Postgres automaticamente.
+# Blueprint opcional para Render. Si subes el repo y usas "New > Blueprint",
+# Render crea el servicio web y la base de datos automaticamente.
 services:
   - type: web
-    name: cripta-negra
+    name: goticos-experimento
     runtime: node
     plan: free
     buildCommand: npm install
@@ -10,17 +10,15 @@ services:
     envVars:
       - key: DATABASE_URL
         fromDatabase:
-          name: cripta-negra-db
+          name: goticos-db
           property: connectionString
       - key: ADMIN_USER
-        value: admin
+        value: pingonsito
       - key: ADMIN_PASS
-        sync: false
+        value: pingonsita
       - key: SESSION_SECRET
         generateValue: true
-      - key: WHATSAPP
-        sync: false
 
 databases:
-  - name: cripta-negra-db
+  - name: goticos-db
     plan: free
